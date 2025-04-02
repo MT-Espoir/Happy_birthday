@@ -1,0 +1,1059 @@
+/* Tổng thể trang */
+.birthday-container {
+  width: 100%;
+  min-height: 100vh;
+  /* Không cần background image vì đã có trong wrapper */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 90; /* Thấp hơn intro-page-container */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  
+  /* Bắt đầu đã visible để tránh flash */
+  opacity: 1;
+  transform: scale(1);
+  animation: fadeInMainPage 1s ease-in-out forwards;
+}
+
+@keyframes fadeInMainPage {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.birthday-container.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+  
+  /* Phần bánh sinh nhật */
+  .cake-container {
+    position: relative;
+    width: 550px; /* Tăng từ 400px lên 600px */
+    height: 550px; /* Tăng từ 400px lên 600px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+  }
+  
+  .cake-container:hover {
+    transform: scale(1.05);
+  }
+  
+  .cake-container.active {
+    cursor: default;
+  }
+  
+  .cake {
+    position: relative;
+    width: 200px;
+    height: 150px;
+  }
+  
+  .cake-layers {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, #FF9AA2, #FFDAC1);
+    border-radius: 10px 10px 50% 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cake-layers:before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 40px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    top: -20px;
+    left: 10%;
+  }
+  
+  .candles {
+    position: absolute;
+    top: -40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1;
+  }
+  
+  .candle {
+    width: 10px;
+    height: 40px;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .candle:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 2px;
+    width: 6px;
+    height: 10px;
+    background-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+  
+  .cake-container.active .candle:before {
+    background-color: #FF4500;
+    box-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
+    opacity: 1;
+    animation: flicker 0.5s infinite alternate;
+  }
+  
+  .flowers-decoration {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top: 10px;
+  }
+  
+  .flowers-decoration:before,
+  .flowers-decoration:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #FF69B4;
+    border-radius: 50%;
+    position: absolute;
+  }
+  
+  .flowers-decoration:before {
+    left: 20px;
+  }
+  
+  .flowers-decoration:after {
+    right: 20px;
+  }
+  
+  /* Ribbons xuất hiện sau khi nhấp vào bánh */
+  .ribbons {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+  }
+  
+  .ribbons:before, 
+  .ribbons:after,
+  .ribbons span {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 25px;
+    animation: ribbonFall 2s ease-in-out infinite;
+  }
+  
+  .ribbons:before {
+    left: 50px;
+    top: -30px;
+    animation-delay: 0.2s;
+    background-color: #FF69B4;
+  }
+  
+  .ribbons:after {
+    right: 70px;
+    top: -30px;
+    animation-delay: 0.5s;
+    background-color: #FFD700;
+  }
+  
+  .ribbons span:nth-child(1) {
+    left: 100px;
+    top: -30px;
+    animation-delay: 0.7s;
+    background-color: #87CEEB;
+  }
+  
+  .ribbons span:nth-child(2) {
+    right: 120px;
+    top: -30px;
+    animation-delay: 0.3s;
+    background-color: #98FB98;
+  }
+  
+  .ribbons span:nth-child(3) {
+    left: 150px;
+    top: -30px;
+    animation-delay: 0.9s;
+    background-color: #DDA0DD;
+  }
+  
+  /* Các phần tử trang trí */
+  .decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  /* Bong bóng */
+  .balloons span {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .balloons span:nth-child(1) {
+    width: 30px;
+    height: 40px;
+    background-color: #87CEEB;
+    left: 10%;
+    top: 20%;
+    animation-duration: 6s;
+  }
+  
+  .balloons span:nth-child(2) {
+    width: 30px;
+    height: 40px;
+    background-color: #FFB6C1;
+    right: 15%;
+    top: 30%;
+    animation-duration: 7s;
+  }
+  
+  .balloons span:nth-child(3) {
+    width: 35px;
+    height: 45px;
+    background-color: #DDA0DD;
+    left: 30%;
+    top: 10%;
+    animation-duration: 8s;
+  }
+  
+  /* Hoa */
+  .flowers span {
+    position: absolute;
+    border-radius: 50%;
+    animation: spin 10s linear infinite;
+  }
+  
+  .flowers span:nth-child(1) {
+    width: 20px;
+    height: 20px;
+    background-color: #FFFF99;
+    left: 25%;
+    bottom: 20%;
+  }
+  
+  .flowers span:nth-child(2) {
+    width: 20px;
+    height: 20px;
+    background-color: #98FB98;
+    right: 25%;
+    bottom: 30%;
+    animation-duration: 12s;
+  }
+  
+  /* Sao */
+  .stars span {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #FFD700;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  
+  .stars span:nth-child(1) {
+    left: 40%;
+    top: 15%;
+  }
+  
+  .stars span:nth-child(2) {
+    right: 30%;
+    top: 25%;
+    animation-duration: 4s;
+  }
+  
+  /* Trái tim */
+  .hearts span {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #FF6347;
+    border-radius: 50%;
+    transform: rotate(45deg);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  .hearts span:nth-child(1) {
+    left: 60%;
+    top: 60%;
+  }
+  
+  .hearts span:nth-child(2) {
+    left: 20%;
+    top: 70%;
+    animation-duration: 3s;
+  }
+  
+  /* Quà tặng */
+  .gifts span {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    animation: bounce 3s ease-in-out infinite;
+  }
+  
+  .gifts span:nth-child(1) {
+    background-color: #9370DB;
+    left: 10%;
+    bottom: 10%;
+  }
+  
+  .gifts span:nth-child(2) {
+    background-color: #20B2AA;
+    right: 10%;
+    bottom: 15%;
+    animation-duration: 4s;
+  }
+  
+  /* Khung lời chúc */
+  .message-container {
+    margin-top: 0px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .initial-message {
+    font-size: 1.5rem;
+    color: #FF6B6B;
+  }
+  
+  .birthday-wish {
+    animation: fadeIn 1s forwards;
+  }
+  
+  .birthday-wish h1 {
+    font-size: 2.5rem;
+    color: #FF6B6B;
+    margin-bottom: 15px;
+  }
+
+  
+  /* Khung ảnh */
+  .photo-frames {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    pointer-events: auto; /* Thay đổi từ none thành auto */
+    top: 0;
+    left: 0;
+  }
+  
+  .photo-frame {
+    width: 185px; /* Tăng từ 150px lên 225px */
+    height: 275px; /* Tăng từ 200px lên 300px */
+    background-color: white;
+    border: 15px solid #FFD700; /* Tăng từ 10px lên 15px */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+    transform: rotate(-5deg);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.5) rotate(-15deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto; /* Đảm bảo khung ảnh có thể tương tác */
+    cursor: pointer; /* Thêm cursor pointer để thể hiện có thể hover */
+  }
+  
+  .photo-frame.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) rotate(var(--rotation, -5deg));
+    animation: frameAppear 0.8s forwards;
+  }
+  
+  /* Sửa lại hover để không xung đột với animation */
+  .photo-frame.visible:hover {
+    transform: scale(1.3) rotate(2deg) !important; /* Sử dụng !important để ghi đè */
+    z-index: 20;
+  }
+  
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+  
+  .photo-frame.visible:hover img {
+    transform: scale(1.1);
+  }
+  
+  /* Đặt giá trị rotation riêng cho từng khung */
+  .frame-random-1 {
+    --rotation: -8deg;
+    left: 10%;
+    top: 4%;
+  }
+  
+  .frame-random-2 {
+    --rotation: 4deg;
+    left: 19%;
+    top: 29%;
+  }
+  
+  .frame-random-3 {
+    --rotation: -10deg;
+    left: 8%;
+    top: 49%;
+  }
+  
+  .frame-random-4 {
+    --rotation: 7deg;
+    right: 20%;
+    top: 10%;
+  }
+  
+  .frame-random-5 {
+    --rotation: 4deg;
+    right: 13%;
+    top: 45%;
+  }
+  
+  .photo-frame:hover {
+    transform: scale(1.3) rotate(2deg);
+    z-index: 20;
+  }
+  
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+  
+  .photo-frame:hover img {
+    transform: scale(1.1);
+  }
+  
+  /* Thêm CSS cho hình ảnh bánh kem */
+  .cake-image {
+    position: relative;
+    width: 450px; /* Tăng từ 300px lên 450px */
+    height: 450px; /* Tăng từ 300px lên 450px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cake-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  
+  .cake-container.active .cake-image img {
+    animation: cakeShake 0.8s forwards;
+    transform-origin: center;
+  }
+  
+  /* Hiệu ứng pháo giấy */
+  .confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .confetti {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #FF6B6B;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  
+  .confetti::before,
+  .confetti::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #FFD700;
+    transform: rotate(45deg);
+  }
+  
+  .confetti::after {
+    background-color: #87CEEB;
+    transform: rotate(90deg);
+  }
+  
+  .confetti.left-top {
+    top: 40%;
+    left: 0;
+    animation-name: shootLeftTop;
+  }
+  
+  .confetti.left-bottom {
+    bottom: 40%;
+    left: 0;
+    animation-name: shootLeftBottom;
+  }
+  
+  .confetti.right-top {
+    top: 40%;
+    right: 0;
+    animation-name: shootRightTop;
+  }
+  
+  .confetti.right-bottom {
+    bottom: 40%;
+    right: 0;
+    animation-name: shootRightBottom;
+  }
+  
+  /* Hiệu ứng ruy băng rơi từ trần nhà */
+  .falling-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9;
+  }
+  
+  .falling-ribbon {
+    position: absolute;
+    top: -50px;
+    width: 6px;
+    height: 50px;
+    background: linear-gradient(to bottom, #FF69B4, #FFB6C1);
+    animation: fallingItem 5s linear infinite;
+  }
+  
+  .falling-heart {
+    position: absolute;
+    top: -20px;
+    width: 20px;
+    height: 20px;
+    background-color: #FF6347;
+    transform: rotate(45deg);
+    animation: fallingItem 7s linear infinite;
+  }
+  
+  .falling-heart::before,
+  .falling-heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #FF6347;
+    border-radius: 50%;
+  }
+  
+  .falling-heart::before {
+    top: -10px;
+    left: 0;
+  }
+  
+  .falling-heart::after {
+    top: 0;
+    left: -10px;
+  }
+  
+  .falling-star {
+    position: absolute;
+    top: -30px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #FFD700;
+    animation: fallingStar 6s linear infinite;
+  }
+  
+  .falling-star::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid #FFD700;
+  }
+  
+  /* Thêm CSS cho hiệu ứng rơi toàn màn hình */
+.falling-decorations-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.falling-ribbon {
+  position: absolute;
+  top: -50px;
+  width: 6px;
+  height: 50px;
+  background: linear-gradient(to bottom, #FF69B4, #FFB6C1);
+  animation: fallingItemFullscreen 5s linear infinite;
+}
+
+.falling-heart {
+  position: absolute;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+  background-color: #FF6347;
+  transform: rotate(45deg);
+  animation: fallingItemFullscreen 7s linear infinite;
+}
+
+.falling-heart::before,
+.falling-heart::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #FF6347;
+  border-radius: 50%;
+}
+
+.falling-heart::before {
+  top: -10px;
+  left: 0;
+}
+
+.falling-heart::after {
+  top: 0;
+  left: -10px;
+}
+
+.falling-star {
+  position: absolute;
+  top: -30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #FFD700;
+  animation: fallingStarFullscreen 6s linear infinite;
+}
+
+.falling-star::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #FFD700;
+}
+
+/* Animation cho hiệu ứng rơi toàn màn hình */
+@keyframes fallingItemFullscreen {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fallingStarFullscreen {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* CSS cho góc quà tặng */
+.corner-gifts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.gift-left {
+  position: absolute;
+  bottom: 0px;
+  width: 220px;
+  height: 220px;
+  animation: gift-bounce 3s ease-in-out infinite;
+}
+
+.gift-right {
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+  width: 220px;
+  height: 220px;
+  animation: gift-bounce 3s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.gift-left img, .gift-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* CSS cho quà rơi */
+.falling-gifts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.falling-gift {
+  position: absolute;
+  top: -100px;
+  width: 60px;
+  height: 60px;
+  animation: fallingGift 8s linear infinite;
+}
+
+.falling-gift img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Animation cho quà rơi */
+@keyframes fallingGift {
+  0% {
+    transform: translateY(-50px) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(10vh) translateX(-15px) scale(0.8);
+  }
+  30% {
+    transform: translateY(30vh) translateX(15px) scale(0.9);
+  }
+  50% {
+    transform: translateY(50vh) translateX(-15px) scale(1);
+  }
+  70% {
+    transform: translateY(70vh) translateX(15px) scale(0.9);
+    opacity: 0.8;
+  }
+  90% {
+    transform: translateY(90vh) translateX(-15px) scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* Animation lắc ngược lại cho một nửa số quà */
+@keyframes fallingGiftReverse {
+  0% {
+    transform: translateY(-50px) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(10vh) translateX(15px) scale(0.8);
+  }
+  30% {
+    transform: translateY(30vh) translateX(-15px) scale(0.9);
+  }
+  50% {
+    transform: translateY(50vh) translateX(15px) scale(1);
+  }
+  70% {
+    transform: translateY(70vh) translateX(-15px) scale(0.9);
+    opacity: 0.8;
+  }
+  90% {
+    transform: translateY(90vh) translateX(15px) scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* Điều chỉnh các animation delay cho quà rơi để tạo hiệu ứng đa dạng */
+.falling-gift:nth-child(odd) {
+  animation: fallingGift 8s linear infinite;
+}
+
+.falling-gift:nth-child(even) {
+  animation: fallingGiftReverse 8s linear infinite;
+}
+
+/* Animation cho quà tặng ở góc */
+@keyframes gift-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+}
+
+/* Thêm lớp phủ kết cấu watercolor */
+.birthday-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,182,193,0.15)" stroke-width="2" /></svg>');
+  background-size: 100px 100px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Animcuons */
+  @keyframes flicker {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes ribbonFall {
+    0% { 
+      transform: translateY(-50px) rotate(0deg); 
+      opacity: 1;
+    }
+    100% { 
+      transform: translateY(300px) rotate(360deg); 
+      opacity: 0;
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(45deg); }
+    50% { transform: scale(1.2) rotate(45deg); }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes cakeShake {
+     0% { transform: translateY(0) scale(1); }
+     20% { transform: translateY(-15px) scale(1.1); }
+     40% { transform: translateY(10px) scale(1.15); }
+     60% { transform: translateY(-10px) scale(1.2); }
+     80% { transform: translateY(5px) scale(1.25); }
+     100% { transform: translateY(0) scale(1.3); }
+  }
+  
+  @keyframes shootLeftTop {
+    0% { 
+      opacity: 1;
+      left: 50%;
+      top: 50%;
+      transform: scale(0.5);
+    }
+    100% { 
+      opacity: 0;
+      left: -100px;
+      top: -100px;
+      transform: scale(1.5) rotate(45deg);
+    }
+  }
+  
+  @keyframes shootLeftBottom {
+    0% { 
+      opacity: 1;
+      left: 50%;
+      bottom: 50%;
+      transform: scale(0.5);
+    }
+    100% { 
+      opacity: 0;
+      left: -100px;
+      bottom: -100px;
+      transform: scale(1.5) rotate(-45deg);
+    }
+  }
+  
+  @keyframes shootRightTop {
+    0% { 
+      opacity: 1;
+      right: 50%;
+      top: 50%;
+      transform: scale(0.5);
+    }
+    100% { 
+      opacity: 0;
+      right: -100px;
+      top: -100px;
+      transform: scale(1.5) rotate(-45deg);
+    }
+  }
+  
+  @keyframes shootRightBottom {
+    0% { 
+      opacity: 1;
+      right: 50%;
+      bottom: 50%;
+      transform: scale(0.5);
+    }
+    100% { 
+      opacity: 0;
+      right: -100px;
+      bottom: -100px;
+      transform: scale(1.5) rotate(45deg);
+    }
+  }
+  
+  @keyframes fallingItem {
+    0% {
+      transform: translateY(-10px) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fallingStar {
+    0% {
+      transform: translateY(-10px) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) rotate(180deg);
+      opacity: 0;
+    }
+  }
+
+/* Animation cho nền watercolor */
+@keyframes watercolorBg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+exit-message {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  z-index: 9999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: fadeInExitMessage 1s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInExitMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Thêm nhấp nháy nhẹ để thu hút sự chú ý */
+.exit-message {
+  animation: fadeInExitMessage 1s forwards, blinkExitMessage 3s infinite 1s;
+}
+
+@keyframes blinkExitMessage {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

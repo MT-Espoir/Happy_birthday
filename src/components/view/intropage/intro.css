@@ -1,0 +1,338 @@
+/* Thêm vào đầu file - wrapper chung cho tất cả các trang */
+.page-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../../assests/images/background/webbackground.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.intro-page-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .intro-page-container.transition-out {
+    opacity: 0;
+    transform: scale(0);
+  }
+  
+  .intro-page-container.fade-out {
+    opacity: 0;
+    transition: opacity 0.7s ease-out;
+  }
+  
+  .intro-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .intro-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('../../assests/images/background/webbackground.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px);
+    z-index: 1;
+    transition: opacity 1.5s ease-out;
+  }
+  
+  .intro-page-container.fade-out .intro-background {
+    opacity: 0;
+  }
+  
+  /* Bức thư ở giữa */
+  .intro-letter {
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Container cho lá thư */
+  .letter-container {
+    position: relative;
+    width: 350px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Hiệu ứng khi hover vào lá thư */
+  .letter-container:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Hiệu ứng khi lá thư được mở */
+  .letter-container.opened {
+    animation: letterOpenAnimation 0.8s forwards;
+  }
+  
+  /* Hình ảnh lá thư */
+  .letter-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  /* Nội dung bên trong lá thư */
+  .letter-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ff6b6b;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
+    width: 80%;
+  }
+  .leter-content p {
+    margin-bottom: 20px;
+  }
+  .letter-content h1 {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+  }
+  /* Animation cho việc mở lá thư */
+  @keyframes letterOpenAnimation {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+  
+  /* Animation hiển thị nội dung thư */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Thêm vào cuối file intro.css */
+
+  /* Hiệu ứng chuyển cảnh với clouds */
+  .clouds-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    animation: showClouds 3.5s forwards;
+  }
+  
+  .clouds-transition.complete {
+    opacity: 1; /* Đảm bảo opacity là 1 khi hoàn thành */
+  }
+  
+  .clouds-transition.fade-out {
+    animation: hideClouds 1.5s forwards;
+  }
+  
+  .cloud {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+  }
+  
+  .cloud1 {
+    width: 100%;
+    height: 100%;
+    top: 10%;
+    left: 0;
+    animation: moveCloud1 2s forwards;
+  }
+  
+  .cloud2 {
+    width: 100%;
+    height: 100%;
+    top: 40%;
+    right: 0;
+    animation: moveCloud2 2s forwards;
+  }
+  
+  .cloud3 {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    left: 100%;
+    animation: moveCloud3 2s forwards;
+  }
+  
+  .cloud4 {
+    width: 100%;
+    height: 100%;
+    top: 20%;
+    right: 20%;
+    animation: moveCloud4 2s forwards;
+  }
+  
+  @keyframes showClouds {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes hideClouds {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes moveCloud1 {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(10%);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes moveCloud2 {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(-10%);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes moveCloud3 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-10%);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes moveCloud4 {
+    0% {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  /* Hiệu ứng cho các đám mây ngẫu nhiên */
+.random-cloud {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+}
+
+/* Các hướng di chuyển khác nhau cho đám mây */
+.direction-0 {
+  animation: moveCloudFromLeft 3.5s forwards;
+}
+
+.direction-1 {
+  animation: moveCloudFromRight 3.5s forwards;
+}
+
+.direction-2 {
+  animation: moveCloudFromBottom 3.5s forwards;
+}
+
+.direction-3 {
+  animation: moveCloudFromTop 3.5s forwards;
+}
+
+/* Cập nhật các animation cho các đám mây */
+
+@keyframes moveCloudFromLeft {
+  0% {
+    transform: translateX(-100%) scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveCloudFromRight {
+  0% {
+    transform: translateX(100%) scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-30%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveCloudFromBottom {
+  0% {
+    transform: translateY(-100%) scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveCloudFromTop {
+  0% {
+    transform: translateY(-100%) scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-30%) scale(1);
+    opacity: 1;
+  }
+}
