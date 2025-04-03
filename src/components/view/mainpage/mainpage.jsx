@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './mainpage.css';
 // Bạn cần thêm các file âm thanh và hình ảnh vào thư mục assets
-// import explosionSound from '../../../assets/sounds/explosion.mp3';
-// import bgMusic from '../../../assets/sounds/birthday-music.mp3';
+import giftpop from '../../assests/sounds/opengift.mp3';
+import framepop from '../../assests/sounds/framepop.mp3'; // Âm thanh cho khung ảnh
 import cakeImage from '../../assests/images/cake/birthdaycake.png'; 
 import person1 from '../../assests/images/persons/person1.jpg'; 
 import person2 from '../../assests/images/persons/person2.jpg'; 
@@ -14,19 +14,19 @@ import gift2 from '../../assests/images/giftbox/gift2.png';
 import giftFly1 from '../../assests/images/giftbox/gift-fly1.png'; 
 import giftFly2 from '../../assests/images/giftbox/gift-fly2.png'; 
 
-const MainPage = () => {
+const MainPage = ({ bgAudio }) => {
   const [cakeClicked, setCakeClicked] = useState(false);
   const [showWishes, setShowWishes] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
-  // State mới để theo dõi khung ảnh nào đã xuất hiện
   const [visibleFrames, setVisibleFrames] = useState([]);
-  // State để lưu trữ thứ tự xuất hiện ngẫu nhiên của các khung ảnh
   const [frameOrder, setFrameOrder] = useState([]);
-  // State để hiển thị thông báo "Nhấn ESC để thoát"
   const [showExitMessage, setShowExitMessage] = useState(false);
   
-  const explosionSoundRef = useRef(null);
-  const bgMusicRef = useRef(null);
+  // Tạo ref cho âm thanh explosion
+  const giftpopRef = useRef(new Audio(giftpop));
+  
+  // Tạo ref cho âm thanh xuất hiện khung ảnh
+  const framepopRef = useRef(new Audio(framepop));
   
   // Tạo thứ tự ngẫu nhiên cho các khung ảnh khi component được tải
   useEffect(() => {
@@ -40,10 +40,45 @@ const MainPage = () => {
     setTimeout(() => {
       setPageVisible(true);
     }, 100);
+    
+    // Chuẩn bị âm thanh
+    giftpopRef.current.volume = 0.7;
+    framepopRef.current.volume = 0.6;
+    
+    // Cleanup function
+    return () => {
+      if (giftpopRef.current) {
+        giftpopRef.current.pause();
+        giftpopRef.current.currentTime = 0;
+      }
+      if (framepopRef.current) {
+        framepopRef.current.pause();
+        framepopRef.current.currentTime = 0;
+      }
+    };
   }, []);
   
   const handleCakeClick = () => {
     setCakeClicked(true);
+    
+    // Play explosion sound without stopping background music
+    giftpopRef.current.play()
+      .catch(error => console.error("Không thể phát âm thanh:", error));
+    
+    // Optional: You could temporarily reduce the background volume a bit
+    // to make the explosion sound more noticeable
+    if (bgAudio) {
+      // Store original volume
+      const originalVolume = bgAudio.volume;
+      
+      // Temporarily reduce volume 
+      bgAudio.volume = 0.3;
+      
+      // Restore volume after explosion sound finishes
+      setTimeout(() => {
+        bgAudio.volume = originalVolume;
+      }, giftpopRef.current.duration * 1000 || 2000); // Fallback to 2 seconds if duration is unavailable
+    }
     
     // Hiển thị lời chúc sau vài giây
     setTimeout(() => {
@@ -52,6 +87,16 @@ const MainPage = () => {
       // Hiển thị từng khung ảnh theo thứ tự ngẫu nhiên
       frameOrder.forEach((frameIndex, index) => {
         setTimeout(() => {
+          // Play frame pop sound when each frame appears
+          const playFrameSound = () => {
+            // Clone the audio to allow multiple sounds to play simultaneously
+            const frameSound = framepopRef.current.cloneNode();
+            frameSound.volume = 0.6; // Set appropriate volume
+            frameSound.play().catch(error => console.error("Không thể phát âm thanh khung ảnh:", error));
+          };
+          
+          // Play the sound and update state to show frame
+          playFrameSound();
           setVisibleFrames(prev => [...prev, frameIndex]);
         }, 800 * (index + 1)); // Mỗi khung cách nhau 800ms
       });
@@ -71,7 +116,7 @@ const MainPage = () => {
   return (
     <div className={`birthday-container ${pageVisible ? 'visible' : ''}`}>
       {/* Phần tử âm thanh */}
-      {/* <audio ref={explosionSoundRef} src={explosionSound} />
+      {/* <audio ref={giftpopRef} src={giftpop} />
       <audio ref={bgMusicRef} src={bgMusic} loop /> */}
       
       {/* Thông báo "Nhấn ESC để thoát" */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './intro.css';
 import MainPage from '../mainpage/mainpage.jsx';
 import letterClose from '../../assests/images/letter/letter-close.png';
@@ -7,6 +7,8 @@ import letterOpen from '../../assests/images/letter/letter-open.png';
 import cloud1 from '../../assests/images/clouds/cloud1.png';
 import cloud2 from '../../assests/images/clouds/cloud2.png';
 import cloud4 from '../../assests/images/clouds/cloud4.png';
+// Import âm thanh
+import bgMusic from '../../assests/sounds/sound1.mp3';
 
 const IntroPage = () => {
   const [showMainPage, setShowMainPage] = useState(false);
@@ -17,6 +19,52 @@ const IntroPage = () => {
   const [fadeOutIntro, setFadeOutIntro] = useState(false);
   const [introVisible, setIntroVisible] = useState(true);
   const [mainPageReady, setMainPageReady] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  
+  // Tạo audio ref để quản lý nhạc nền
+  const audioRef = useRef(new Audio(bgMusic));
+  
+  // Phát nhạc khi trang được tải
+  // Update the useEffect hook that handles audio
+
+useEffect(() => {
+  // Đặt các thuộc tính audio
+  audioRef.current.loop = true;
+  audioRef.current.volume = 0.7;
+  // Cố gắng phát nhạc ngay khi tải trang
+  const attemptAutoplay = async () => {
+    try {
+      // Thử phát nhạc ngay lập tức
+      await audioRef.current.play();
+      setIsMusicPlaying(true);
+    } catch (error) {
+      console.log("Autoplay blocked by browser, waiting for user interaction");
+      // Fallback - nếu autoplay bị chặn, vẫn lắng nghe sự kiện click
+      document.addEventListener('click', playMusic);
+    }
+  };
+  
+  // Hàm phát nhạc khi có tương tác người dùng (click)
+  const playMusic = () => {
+    if (!isMusicPlaying) {
+      audioRef.current.play()
+        .then(() => {
+          setIsMusicPlaying(true);
+          document.removeEventListener('click', playMusic);
+        })
+        .catch(error => console.error("Không thể phát nhạc:", error));
+    }
+  };
+  
+  // Cố gắng tự động phát
+  attemptAutoplay();
+  
+  // Cleanup khi component unmount
+  return () => {
+    document.removeEventListener('click', playMusic);
+    audioRef.current.pause();
+  };
+}, [isMusicPlaying]);
   
   // Hàm tạo mảng đám mây ngẫu nhiên
   const generateRandomClouds = () => {
@@ -83,6 +131,13 @@ const IntroPage = () => {
     if (!letterOpened) {
       setLetterOpened(true);
       
+      // Đảm bảo nhạc đang phát khi mở thư
+      if (!isMusicPlaying) {
+        audioRef.current.play()
+          .then(() => setIsMusicPlaying(true))
+          .catch(error => console.error("Không thể phát nhạc:", error));
+      }
+      
       // Sau khi mở thư, đợi 1.5 giây để người dùng xem nội dung
       setTimeout(() => {
         // Kích hoạt hiệu ứng clouds
@@ -110,7 +165,7 @@ const IntroPage = () => {
   return (
     <div className="page-wrapper">
       {/* Main Page được render phía dưới (ẩn ban đầu) */}
-      {showMainPage && <MainPage />}
+      {showMainPage && <MainPage bgAudio={audioRef.current} />}
       
       {/* Intro Page nằm phía trên với z-index cao hơn */}
       {introVisible && (
