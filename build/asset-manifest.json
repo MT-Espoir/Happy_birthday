@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "./static/css/main.0f06a415.css",
+    "main.js": "./static/js/main.59603fc4.js",
+    "static/js/453.39bf4a51.chunk.js": "./static/js/453.39bf4a51.chunk.js",
+    "static/media/gift2.png": "./static/media/gift2.3c0f23c42fdeca91dd84.png",
+    "static/media/gift-fly2.png": "./static/media/gift-fly2.3095de0a1cfe2702df25.png",
+    "static/media/cloud2.png": "./static/media/cloud2.7780cd732d6c28cd6c47.png",
+    "static/media/sound1.mp3": "./static/media/sound1.ced802c43ca0fa85c7e0.mp3",
+    "static/media/birthdaycake.png": "./static/media/birthdaycake.7e7f509033b09daea924.png",
+    "static/media/webbackground.jpg": "./static/media/webbackground.7c1b98e4bdbc950a6a29.jpg",
+    "static/media/cloud1.png": "./static/media/cloud1.d841da9fdc64e942c2f7.png",
+    "static/media/person3.jpg": "./static/media/person3.4d5a9db509ac0d832c5d.jpg",
+    "static/media/person5.jpg": "./static/media/person5.5d8cc648f0b0d04ac722.jpg",
+    "static/media/person1.jpg": "./static/media/person1.6a610abc45647681b7f5.jpg",
+    "static/media/gift-fly1.png": "./static/media/gift-fly1.5a0a02e9a82fc74ff785.png",
+    "static/media/letter-close.png": "./static/media/letter-close.25a936f0c67fa1f342e0.png",
+    "static/media/cloud4.png": "./static/media/cloud4.312731c870e65f9ed020.png",
+    "static/media/gift1.png": "./static/media/gift1.e358cd25008bcd38488f.png",
+    "static/media/person4.jpg": "./static/media/person4.26bf94b607bc1654727e.jpg",
+    "static/media/letter-open.png": "./static/media/letter-open.0c7c981a3e9d0b3ef776.png",
+    "static/media/person2.jpg": "./static/media/person2.83c4b559c2ff2fe28731.jpg",
+    "static/media/framepop.mp3": "./static/media/framepop.9cd923eb82cadb78fb3b.mp3",
+    "static/media/opengift.mp3": "./static/media/opengift.d409980ca82f616bc612.mp3",
+    "index.html": "./index.html",
+    "main.0f06a415.css.map": "./static/css/main.0f06a415.css.map",
+    "main.59603fc4.js.map": "./static/js/main.59603fc4.js.map",
+    "453.39bf4a51.chunk.js.map": "./static/js/453.39bf4a51.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f06a415.css",
+    "static/js/main.59603fc4.js"
+  ]
+}
