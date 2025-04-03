@@ -88,8 +88,8 @@
   
   /* Hình ảnh lá thư */
   .letter-image {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 150%;
+    max-height: 150%;
     object-fit: contain;
     transition: all 0.5s ease-in-out;
   }
@@ -102,19 +102,20 @@
     transform: translate(-50%, -50%);
     text-align: center;
     color: #ff6b6b;
-    font-family: 'Comic Sans MS', cursive;
-    font-size: 1.2rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1.9rem;
+    font-weight: bold;
     opacity: 0;
     animation: fadeIn 1s forwards;
     animation-delay: 0.5s;
     width: 80%;
   }
-  .leter-content p {
-    margin-bottom: 20px;
-  }
+  /* .leter-content p {
+    margin-bottom: 10px;
+  } */
   .letter-content h1 {
-    font-size: 1.2rem;
-    margin-bottom: 50px;
+    font-size: 2.1rem;
+    margin-bottom: 130px;
   }
   /* Animation cho việc mở lá thư */
   @keyframes letterOpenAnimation {
@@ -306,11 +307,11 @@
 
 @keyframes moveCloudFromRight {
   0% {
-    transform: translateX(100%) scale(0.7);
+    transform: translateX(-100%) scale(0.7);
     opacity: 0;
   }
   100% {
-    transform: translateX(-30%) scale(1);
+    transform: translateX(-60%) scale(1);
     opacity: 1;
   }
 }
@@ -321,7 +322,7 @@
     opacity: 0;
   }
   100% {
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-60%) scale(1);
     opacity: 1;
   }
 }

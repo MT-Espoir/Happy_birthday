@@ -34,18 +34,14 @@ useEffect(() => {
     setShowPlayButton(false);
   }
   
-  // Đặt các thuộc tính audio
   audioRef.current.loop = true;
   audioRef.current.volume = 0.7;
-  // Cố gắng phát nhạc ngay khi tải trang
   const attemptAutoplay = async () => {
     try {
-      // Thử phát nhạc ngay lập tức
       await audioRef.current.play();
       setIsMusicPlaying(true);
     } catch (error) {
       console.log("Autoplay blocked by browser, waiting for user interaction");
-      // Fallback - nếu autoplay bị chặn, vẫn lắng nghe sự kiện click
       document.addEventListener('click', playMusic);
     }
   };
@@ -61,12 +57,8 @@ useEffect(() => {
         .catch(error => console.error("Không thể phát nhạc:", error));
     }
   };
-  
-  // Cố gắng tự động phát
-  attemptAutoplay();
-  
-  // Cleanup khi component unmount
-  return () => {
+    attemptAutoplay();
+    return () => {
     document.removeEventListener('click', playMusic);
     audioRef.current.pause();
   };
@@ -76,20 +68,16 @@ useEffect(() => {
   const generateRandomClouds = () => {
     const cloudImages = [cloud1, cloud2, cloud4];
     const clouds = [];
+  
+    const sections = 4; 
     
-    // Chia màn hình thành nhiều phần để đảm bảo phân bố đều
-    const sections = 4; // Chia thành 4x4 phần
-    
-    // Tạo đám mây phân bố đều trên toàn màn hình
     for (let row = 0; row < sections; row++) {
       for (let col = 0; col < sections; col++) {
-        // Mỗi section sẽ có 12-13 đám mây (tổng ~200 đám mây)
         const cloudsPerSection = 6;
         
         for (let i = 0; i < cloudsPerSection; i++) {
-          const randomCloudIndex = Math.floor(Math.random() * 3); // Chọn một trong 3 hình ảnh
+          const randomCloudIndex = Math.floor(Math.random() * 3); 
           
-          // Tính toán vị trí trong section
           const topBase = (row * 100) / sections;
           const leftBase = (col * 100) / sections;
           
@@ -100,11 +88,11 @@ useEffect(() => {
           clouds.push({
             id: `${row}-${col}-${i}`,
             image: cloudImages[randomCloudIndex],
-            top: topBase + topOffset, // Vị trí top trong section
-            left: leftBase + leftOffset, // Vị trí left trong section
+            top: topBase + topOffset, 
+            left: leftBase + leftOffset,
             width: 50 + Math.random() * 30, // Giảm kích thước xuống 20-50%
-            delay: Math.random() * 1, // Tăng độ trễ ngẫu nhiên (0-2s)
-            direction: Math.floor(Math.random() * 4) // Hướng di chuyển ngẫu nhiên (0-3)
+            delay: Math.random() * 1,
+            direction: Math.floor(Math.random() * 4) 
           });
         }
       }
@@ -116,20 +104,15 @@ useEffect(() => {
   // Tạo mảng đám mây khi component được mount
   const [randomClouds] = useState(generateRandomClouds);
   
-  // Xử lý khi MainPage đã sẵn sàng
   useEffect(() => {
     if (mainPageReady && showMainPage) {
-      // Sau khi MainPage đã được tải và hiển thị, bắt đầu hiệu ứng fade-out
       setTimeout(() => {
-        // Bắt đầu hiệu ứng mờ dần của đám mây
         setHideClouds(true);
         setFadeOutIntro(true);
-        
-        // Đợi cho hiệu ứng fade-out hoàn tất trước khi gỡ bỏ IntroPage
         setTimeout(() => {
           setIntroVisible(false);
         }, 1500);
-      }, 1000); // Đợi 1 giây sau khi MainPage đã hiển thị
+      }, 1000); 
     }
   }, [mainPageReady, showMainPage]);
   
@@ -137,28 +120,17 @@ useEffect(() => {
     if (!letterOpened) {
       setLetterOpened(true);
       
-      // Đảm bảo nhạc đang phát khi mở thư
       if (!isMusicPlaying) {
         audioRef.current.play()
           .then(() => setIsMusicPlaying(true))
           .catch(error => console.error("Không thể phát nhạc:", error));
-      }
-      
-      // Sau khi mở thư, đợi 1.5 giây để người dùng xem nội dung
+      }     
       setTimeout(() => {
-        // Kích hoạt hiệu ứng clouds
-        setShowClouds(true);
-        
-        // Sau 3.5 giây, đám mây đã phủ kín màn hình
+        setShowClouds(true);        
         setTimeout(() => {
-          setCloudsCoverComplete(true);
-          
-          // Sau 2 giây giữ đám mây, tải MainPage (nhưng chưa hiệu ứng fade-out)
+          setCloudsCoverComplete(true);          
           setTimeout(() => {
-            // Tải MainPage phía dưới các đám mây
             setShowMainPage(true);
-            
-            // Đánh dấu MainPage đã sẵn sàng sau 500ms để đảm bảo đã render xong
             setTimeout(() => {
               setMainPageReady(true);
             }, 500);
@@ -170,13 +142,9 @@ useEffect(() => {
   
   return (
     <div className="page-wrapper">
-      {/* Main Page được render phía dưới (ẩn ban đầu) */}
       {showMainPage && <MainPage bgAudio={audioRef.current} />}
-      
-      {/* Intro Page nằm phía trên với z-index cao hơn */}
       {introVisible && (
         <div className={`intro-page-container ${fadeOutIntro ? 'fade-out' : ''}`}>
-          {/* Hiệu ứng clouds chuyển cảnh */}
           {(showClouds || hideClouds) && (
             <div className={`clouds-transition ${cloudsCoverComplete ? 'complete' : ''} ${hideClouds ? 'fade-out' : ''}`}>
               {randomClouds.map(cloud => (
@@ -197,13 +165,11 @@ useEffect(() => {
           )}
           
           <div className="intro-container">
-            <div className="intro-background"></div>
-            
-            {/* Bức thư ở giữa */}
+            <div className="intro-background"></div>      
             <div 
               className="intro-letter"
               onClick={handleLetterClick}
-              onTouchStart={handleLetterClick} // Add this line
+              onTouchStart={handleLetterClick}
             >
               <div className={`letter-container ${letterOpened ? 'opened' : ''}`}>
                 <img
@@ -231,7 +197,6 @@ useEffect(() => {
             })
             .catch(error => console.error("Cannot play audio:", error));
         }}>
-          ▶️ Tap to Play Music
         </div>
       )}
     </div>
