@@ -20,6 +20,7 @@ const IntroPage = () => {
   const [introVisible, setIntroVisible] = useState(true);
   const [mainPageReady, setMainPageReady] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(false);
   
   // Tạo audio ref để quản lý nhạc nền
   const audioRef = useRef(new Audio(bgMusic));
@@ -28,6 +29,11 @@ const IntroPage = () => {
   // Update the useEffect hook that handles audio
 
 useEffect(() => {
+  // Check if we're on mobile
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    setShowPlayButton(false);
+  }
+  
   // Đặt các thuộc tính audio
   audioRef.current.loop = true;
   audioRef.current.volume = 0.7;
@@ -197,6 +203,7 @@ useEffect(() => {
             <div 
               className="intro-letter"
               onClick={handleLetterClick}
+              onTouchStart={handleLetterClick} // Add this line
             >
               <div className={`letter-container ${letterOpened ? 'opened' : ''}`}>
                 <img
@@ -213,6 +220,18 @@ useEffect(() => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {showPlayButton && !isMusicPlaying && (
+        <div className="mobile-play-button" onClick={() => {
+          audioRef.current.play()
+            .then(() => {
+              setIsMusicPlaying(true);
+              setShowPlayButton(false);
+            })
+            .catch(error => console.error("Cannot play audio:", error));
+        }}>
+          ▶️ Tap to Play Music
         </div>
       )}
     </div>

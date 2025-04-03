@@ -1057,3 +1057,91 @@ exit-message {
     opacity: 0.6;
   }
 }
+
+/* Add at the end of your file */
+
+/* Media Queries for Mobile Devices */
+@media screen and (max-width: 768px) {
+  /* Adjust cake container size */
+  .cake-container {
+    width: 210px;
+    height: 210px;
+    margin-bottom: 15px;
+  }
+  
+  /* Make photos display in a single column */
+  .photo-frames {
+    flex-direction: column;
+    padding: 15px;
+  }
+  .right-photos {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+  }
+  .left-photos{
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  /* Adjust photo frame size */
+  .photo-frame {
+    width: 300px;
+    height: 220px;
+    margin: 10px auto;
+  }
+  .frame-random-1{
+    left: 2;
+    top: 3;
+  }
+  .frame-random-2{
+    left: 0;
+    top: 5;
+  }
+  .frame-random-3{
+    left: 0;
+    top: 20;
+  }
+  /* Adjust message container */
+  .message-container {
+    margin-top: 10px;
+  }
+  
+  .birthday-wish h1 {
+    font-size: 1.5rem;
+  }
+  
+  /* Adjust gift sizes */
+  .gift-left, .gift-right {
+    width: 150px;
+    height: 150px;
+  }
+  
+  /* Reduce the number of falling decorations for better performance */
+  .falling-ribbon, .falling-heart, .falling-star, .falling-gift {
+    animation-duration: 6s !important;
+  }
+}
+
+/* For smaller phones */
+@media screen and (max-width: 480px) {
+  .cake-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .photo-frame {
+    width: 130px;
+    height: 180px;
+  }
+  
+  .birthday-wish h1 {
+    font-size: 1.2rem;
+  }
+  
+  .gift-left, .gift-right {
+    width: 120px;
+    height: 120px;
+  }
+}

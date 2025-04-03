@@ -45,6 +45,17 @@ const MainPage = ({ bgAudio }) => {
     giftpopRef.current.volume = 0.7;
     framepopRef.current.volume = 0.6;
     
+    // Handle orientation changes
+    const handleOrientationChange = () => {
+      // Force a re-render when orientation changes
+      setPageVisible(false);
+      setTimeout(() => {
+        setPageVisible(true);
+      }, 50);
+    };
+    
+    window.addEventListener('orientationchange', handleOrientationChange);
+    
     // Cleanup function
     return () => {
       if (giftpopRef.current) {
@@ -55,6 +66,7 @@ const MainPage = ({ bgAudio }) => {
         framepopRef.current.pause();
         framepopRef.current.currentTime = 0;
       }
+      window.removeEventListener('orientationchange', handleOrientationChange);
     };
   }, []);
   
@@ -113,6 +125,11 @@ const MainPage = ({ bgAudio }) => {
     return visibleFrames.includes(frameIndex);
   };
 
+  // Add this function at the top of your component
+  const isMobileDevice = () => {
+    return window.innerWidth <= 768;
+  };
+
   return (
     <div className={`birthday-container ${pageVisible ? 'visible' : ''}`}>
       {/* Phần tử âm thanh */}
@@ -167,7 +184,7 @@ const MainPage = ({ bgAudio }) => {
         <div className="falling-decorations-fullscreen">
           {/* Code cho falling decorations giữ nguyên */}
           <div className="falling-ribbons">
-            {[...Array(30)].map((_, i) => (
+            {[...Array(isMobileDevice() ? 15 : 30)].map((_, i) => (
               <div key={`ribbon-${i}`} className="falling-ribbon" style={{ 
                 left: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 3}s`
@@ -177,7 +194,7 @@ const MainPage = ({ bgAudio }) => {
           
           {/* Trái tim rơi từ trên xuống */}
           <div className="falling-hearts">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(isMobileDevice() ? 10 : 20)].map((_, i) => (
               <div key={`heart-${i}`} className="falling-heart" style={{ 
                 left: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 4}s`
@@ -187,7 +204,7 @@ const MainPage = ({ bgAudio }) => {
           
           {/* Ngôi sao rơi từ trên xuống */}
           <div className="falling-stars">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(isMobileDevice() ? 10 : 20)].map((_, i) => (
               <div key={`star-${i}`} className="falling-star" style={{ 
                 left: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 5}s`
@@ -197,7 +214,7 @@ const MainPage = ({ bgAudio }) => {
           
           {/* Hộp quà rơi từ trên xuống với hiệu ứng lắc qua lại */}
           <div className="falling-gifts">
-            {[...Array(15)].map((_, i) => (
+            {[...Array(isMobileDevice() ? 8 : 15)].map((_, i) => (
               <div 
                 key={`gift-${i}`} 
                 className="falling-gift" 

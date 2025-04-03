@@ -336,3 +336,50 @@
     opacity: 1;
   }
 }
+
+/* Add at the end of your file */
+
+/* Media Queries for Mobile Devices */
+@media screen and (max-width: 768px) {
+  /* Letter container adjustments */
+  .letter-container {
+    width: 280px;
+    height: 240px;
+  }
+  
+  .letter-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .letter-content {
+    width: 90%;
+    padding: 20px 15px;
+  }
+  
+  .letter-content p {
+    font-size: 1.5rem;
+  }
+  
+  .letter-content h1 {
+    font-size: 1rem;
+  }
+  
+  /* Reduce cloud density for better performance on mobile */
+  .random-cloud {
+    width: 70% !important;
+    height: 70% !important;
+  }
+}
+
+/* For smaller phones */
+@media screen and (max-width: 480px) {
+  .letter-container {
+    width: 250px;
+    height: 210px;
+  }
+  
+  .letter-content p {
+    font-size: 1.2rem;
+  }
+}
