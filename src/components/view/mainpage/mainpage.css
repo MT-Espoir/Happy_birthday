@@ -615,6 +615,7 @@
   /* Thêm CSS cho hiệu ứng rơi toàn màn hình */
 .falling-decorations-fullscreen {
   position: fixed;
+  will-change: transform;
   top: 0;
   left: 0;
   width: 100%;

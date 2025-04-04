@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useMemo } from 'react';
 import './mainpage.css';
 // Bạn cần thêm các file âm thanh và hình ảnh vào thư mục assets
 import giftpop from '../../assests/sounds/opengift.mp3';
@@ -107,6 +107,111 @@ const MainPage = ({ bgAudio }) => {
   const isMobileDevice = () => {
     return window.innerWidth <= 768;
   };
+  
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
+
+  const decorationsData = useMemo(() => {
+    if (!cakeClicked) return null;
+    
+    const ribbonCount = isMobile ? 15 : 30;
+    const heartCount = isMobile ? 10 : 20;
+    const starCount = isMobile ? 10 : 20;
+    const giftCount = isMobile ? 8 : 15;
+    
+    const ribbons = Array.from({ length: ribbonCount }).map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 3}s`,
+      key: `ribbon-${i}`
+    }));
+    
+    const hearts = Array.from({ length: heartCount }).map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 4}s`,
+      key: `heart-${i}`
+    }));
+    
+    const stars = Array.from({ length: starCount }).map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      key: `star-${i}`
+    }));
+    
+    const gifts = Array.from({ length: giftCount }).map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 6}s`,
+      animationDuration: `${7 + Math.random() * 4}s`,
+      key: `gift-${i}`,
+      isEven: i % 2 === 0
+    }));
+    
+    return { ribbons, hearts, stars, gifts };
+  }, [cakeClicked, isMobile]);
+
+  const FallingDecorations = useMemo(() => {
+    if (!decorationsData) return null;
+    
+    return (
+      <div className="falling-decorations-fullscreen">
+        <div className="falling-ribbons">
+          {decorationsData.ribbons.map(ribbon => (
+            <div 
+              key={ribbon.key} 
+              className="falling-ribbon" 
+              style={{ 
+                left: ribbon.left,
+                animationDelay: ribbon.animationDelay
+              }}
+            ></div>
+          ))}
+        </div>
+        
+        {/* Trái tim */}
+        <div className="falling-hearts">
+          {decorationsData.hearts.map(heart => (
+            <div 
+              key={heart.key} 
+              className="falling-heart" 
+              style={{ 
+                left: heart.left,
+                animationDelay: heart.animationDelay
+              }}
+            ></div>
+          ))}
+        </div>
+        
+        {/* Ngôi sao */}
+        <div className="falling-stars">
+          {decorationsData.stars.map(star => (
+            <div 
+              key={star.key} 
+              className="falling-star" 
+              style={{ 
+                left: star.left,
+                animationDelay: star.animationDelay
+              }}
+            ></div>
+          ))}
+        </div>
+        
+        {/* Hộp quà */}
+        <div className="falling-gifts">
+          {decorationsData.gifts.map(gift => (
+            <div 
+              key={gift.key} 
+              className="falling-gift" 
+              style={{ 
+                left: gift.left,
+                animationDelay: gift.animationDelay,
+                animationDuration: gift.animationDuration
+              }}
+            >
+              <img src={gift.isEven ? giftFly1 : giftFly2} alt="Quà rơi" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }, [decorationsData]);
 
   return (
     <div className={`birthday-container ${pageVisible ? 'visible' : ''}`}>
@@ -151,56 +256,9 @@ const MainPage = ({ bgAudio }) => {
       </div>
       
       {/* Ribbons, trái tim và ngôi sao rơi trên toàn màn hình */}
-      {cakeClicked && (
-        <div className="falling-decorations-fullscreen">
-          <div className="falling-ribbons">
-            {[...Array(isMobileDevice() ? 15 : 30)].map((_, i) => (
-              <div key={`ribbon-${i}`} className="falling-ribbon" style={{ 
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`
-              }}></div>
-            ))}
-          </div>
-          
-          {/* Trái tim */}
-          <div className="falling-hearts">
-            {[...Array(isMobileDevice() ? 10 : 20)].map((_, i) => (
-              <div key={`heart-${i}`} className="falling-heart" style={{ 
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`
-              }}></div>
-            ))}
-          </div>
-          
-          {/* Ngôi sao  */}
-          <div className="falling-stars">
-            {[...Array(isMobileDevice() ? 10 : 20)].map((_, i) => (
-              <div key={`star-${i}`} className="falling-star" style={{ 
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`
-              }}></div>
-            ))}
-          </div>
-          
-          {/* Hộp quà*/}
-          <div className="falling-gifts">
-            {[...Array(isMobileDevice() ? 8 : 15)].map((_, i) => (
-              <div 
-                key={`gift-${i}`} 
-                className="falling-gift" 
-                style={{ 
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 6}s`,
-                  animationDuration: `${7 + Math.random() * 4}s` // Thêm thời gian khác nhau
-                }}
-              >
-                <img src={i % 2 === 0 ? giftFly1 : giftFly2} alt="Quà rơi" />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {/* Cake */}
+      {FallingDecorations}
+      
+      {/* Bánh sinh nhật */}
       <div className={`cake-container ${cakeClicked ? 'active' : ''}`} onClick={!cakeClicked ? handleCakeClick : undefined}>
         <div className="cake-image">
           <img src={cakeImage} alt="Bánh sinh nhật" />
