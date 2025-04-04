@@ -1092,6 +1092,18 @@ exit-message {
     height: 220px;
     margin: 10px auto;
   }
+  .frame-random-1{
+    left: 2;
+    top: 3;
+  }
+  .frame-random-2{
+    left: 0;
+    top: 5;
+  }
+  .frame-random-3{
+    left: 0;
+    top: 12;
+  }
   /* Adjust message container */
   .message-container {
     margin-top: 10px;
